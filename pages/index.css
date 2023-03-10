@@ -17,9 +17,9 @@
 @import url(../blocks/header/__logo/header__logo.css);
 
 @import url(../blocks/profile/profile.css);
-@import url(../blocks/profile/_column/profile_column_image.css);
-@import url(../blocks/profile/_column/profile_column_info.css);
-@import url(../blocks/profile/_column/profile_column_button.css);
+@import url(../blocks/profile/__column/profile__column_image.css);
+@import url(../blocks/profile/__column/profile__column_info.css);
+@import url(../blocks/profile/__column/profile__column_button.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__name-row/profile__name-row.css);
 @import url(../blocks/profile/__name/profile__name.css);
