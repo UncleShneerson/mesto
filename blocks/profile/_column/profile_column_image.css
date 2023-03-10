@@ -1,0 +1,6 @@
+.profile_column_image {
+  width: 120px;
+  height: 120px;
+  flex-grow: 1;
+  text-align: center;
+}

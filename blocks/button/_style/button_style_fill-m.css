@@ -1,0 +1,21 @@
+.button_style_fill-m {
+  background-color: var(--color_bg);
+  color: var(--color_contrast);
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+  min-height: 50px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.22;
+}
+
+.button_style_fill-m:hover {
+  opacity: 0.8;
+}
+
+@media only screen and (max-width: 537.5px) {
+  .button_style_fill-m {
+    font-size: 14px;
+    min-height: 46px;
+  }
+}

@@ -1,0 +1,18 @@
+:root {
+  /* Определяем цветовую палитру */
+  --color_bg: #000;
+  --color_contrast: #fff;
+  --color_text: #000;
+  --color_mark: #545454;
+
+  /* Определяем Layout */
+  --content_width-max: 880px;
+  --content_width: var(--content_width-max);
+  --page_paddings-side: 19px;
+}
+
+@media screen and (max-width: 918px) {
+  :root {
+    --content_width: calc(100% - 2*var(--page_paddings-side));
+  }
+}

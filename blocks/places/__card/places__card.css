@@ -1,0 +1,7 @@
+.places__card {
+  background-color:var(--color_contrast);
+  color: var(--color_text);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+}
