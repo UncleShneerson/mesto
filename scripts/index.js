@@ -17,7 +17,6 @@ function popupVisibleOn () {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
   popup.classList.add('popup_opened');
-  console.log(profileJob.textContent + ' ' + nameInput.value);
 }
 
 
