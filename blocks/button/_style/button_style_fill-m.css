@@ -1,12 +1,14 @@
 .button_style_fill-m {
-  background-color: var(--color_bg);
-  color: var(--color_contrast);
+  box-sizing: border-box;
+  background-color: #000;
+  color: #fff;
   opacity: 1;
   transition: opacity 0.2s ease-in-out;
   min-height: 50px;
   font-weight: 400;
   font-size: 18px;
   line-height: 1.22;
+  border-radius: 2px;
 }
 
 .button_style_fill-m:hover {

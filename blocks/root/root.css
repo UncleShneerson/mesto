@@ -16,6 +16,6 @@
   -moz-text-size-adjust: 100%;
 
   /* Визуальные стили */
-  background-color: var(--color_bg);
-  color: var(--color_contrast);
+  background-color: #000;
+  color: #fff;
 }

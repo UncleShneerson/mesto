@@ -1,20 +1,21 @@
-.popup__form-input {
-  /* box-sizing: border-box; */
+.form__input {
+  box-sizing: border-box;
   border-radius: 0;
   border: 0;
   border-bottom: 1px solid rgba(0,0,0,0.2);
   width: 100%;
   margin: 0 0 23px 0;
-  padding: 5px 5px 10px 5px;
+  padding: 5px 0px 10px 0px;
   font-size: 14px;
   line-height: 1.22;
 }
 
-.popup__form-input:nth-child(2) {
-  margin-bottom: 45px;
+.form__input:nth-child(2) {
+  margin-bottom: 50px;
 }
 
-.popup__form-input:focus {
+.form__input:focus {
+  padding: 5px 5px 10px 5px;
   outline-color: rgba(0,0,0,0.2);
   outline-width: 2px;
   outline-style: solid;

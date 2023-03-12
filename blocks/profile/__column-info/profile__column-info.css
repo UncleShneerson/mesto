@@ -1,10 +1,15 @@
 .profile__column-info {
-  flex-basis: 350px;
+  max-width: 550px;
   flex-grow: 999;
 }
 
-@media screen and (max-width: 537.5px) {
+@media screen and (min-width: 600px) {
+  flex-basis: 450px;
+}
+
+@media screen and (max-width: 600px) {
   .profile__column-info {
     text-align: center;
+    max-width: 100%;
   }
 }
