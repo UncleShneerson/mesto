@@ -12,17 +12,17 @@ let jobInput = pForm.querySelector('input[name="pfJob"]'); //Поле ввода
 
 
 // ФУНКЦИИ
-//Открытие попапа
-function popupVisibleOn () {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
-  popup.classList.add('popup_opened');
+//Открытие и закрытие попапа
+function popupVisibleChange () {
+  popup.classList.toggle('popup_opened');
 }
 
+//Редактирование профиля
+function profileEdit () {
+  nameInput.value = profileName.textContent; //Присваиваем значения полям ввода
+  jobInput.value = profileJob.textContent;
 
-//Закрытие попапа
-function popupVisibleOff () {
-  popup.classList.remove('popup_opened');
+  popupVisibleChange (); //Открываем попап
 }
 
 
@@ -32,12 +32,12 @@ function handleFormSubmit (evt) {
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  popupVisibleOff (); //Закрываем попап
+  popupVisibleChange (); //Закрываем попап
 }
 
 
 
 // ОТСЛЕЖИВАНИЯ
-btnEdit.addEventListener('click', popupVisibleOn); //Редактировать профиль
-btnClose.addEventListener('click', popupVisibleOff); //Закрыть редактирование профиля
+btnEdit.addEventListener('click', profileEdit); //Редактировать профиль
+btnClose.addEventListener('click', popupVisibleChange); //Закрыть редактирование профиля
 pForm.addEventListener('submit', handleFormSubmit); //Сабмит профайл формы

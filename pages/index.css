@@ -4,11 +4,9 @@
 /* Подключаем сторонние шрифты */
 @import url(../vendor/fonts.css);
 
-/* Удалил все переменные из
-@import url(../vendor/variables.css);
-Можно ли пояснить почему их нельзя использовать?
-Предыдущие ревьюеры отмечали их как плюс и научили передавать их rootу и
-выносить в отдельный css, от этого теперь немного запутался.
+/*
+=) про переменные - ничего страшного, у меня даже мелькнула такая мысь, с каждым бывает )
+В любом случае спасибо за разъяснения ) и еще раз урок мне не халтурить и разбивать правки на ветки и коммиты.
 */
 
 /* Определяем стили для всей страницы*/
@@ -21,7 +19,6 @@
 @import url(../blocks/header/__logo/header__logo.css);
 
 @import url(../blocks/profile/profile.css);
-@import url(../blocks/profile/__column-image/profile__column-image.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
 @import url(../blocks/profile/__column-info/profile__column-info.css);
 @import url(../blocks/profile/__name-row/profile__name-row.css);

@@ -3,10 +3,6 @@
   flex-grow: 999;
 }
 
-@media screen and (min-width: 600px) {
-  flex-basis: 450px;
-}
-
 @media screen and (max-width: 600px) {
   .profile__column-info {
     text-align: center;
