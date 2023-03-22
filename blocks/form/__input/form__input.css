@@ -21,3 +21,8 @@
   outline-style: solid;
   border-radius: 2px;
 }
+
+.form__input::placeholder {
+  color: #c4c4c4;
+}
+

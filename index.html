@@ -15,8 +15,6 @@
 
   <main class="content">
     <section class="profile">
-      <!-- Еще раз спасибо за ревью и за уделенное время ) посидел со сежей головой - и правда не нужна обвязка. Кажется все решилось через центрирование содержимого в родителе.
-      Не хочется с вами прощаться, но надеюсь, что на этот раз все получилось :) -->
       <img src="./images/avatar.jpg" alt="Ваш аватар" class="profile__avatar">
       <div class="profile__column-info">
           <div class="profile__name-row">
@@ -30,49 +28,12 @@
 
     <section class="places" aria-label="Список мест">
       <ul class="places__grid">
-        <li class="places__card">
-          <div class="places__image" style="background-image: url(./images/place_australia.webp)"></div>
-          <div class="places__description">
-            <h2 class="places__name">Австралия</h2>
-            <button type="button" class="button places__like places__like_active hover-opacity" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="places__card">
-          <div class="places__image" style="background-image: url(./images/place_bristol.webp)"></div>
-          <div class="places__description">
-            <h2 class="places__name">Бристоль</h2>
-            <button type="button" class="button places__like hover-opacity" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="places__card">
-          <div class="places__image" style="background-image: url(./images/place_carribbean.webp)"></div>
-          <div class="places__description">
-            <h2 class="places__name">Карибский Бассейн</h2>
-            <button type="button" class="button places__like hover-opacity" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="places__card">
-          <div class="places__image" style="background-image: url(./images/place_maldives.webp)"></div>
-          <div class="places__description">
-            <h2 class="places__name">Мальдивы</h2>
-            <button type="button" class="button places__like hover-opacity" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="places__card">
-          <div class="places__image" style="background-image: url(./images/place_morocco.webp)"></div>
-          <div class="places__description">
-            <h2 class="places__name">Мароко</h2>
-            <button type="button" class="button places__like hover-opacity" aria-label="Нравится"></button>
-          </div>
-        </li>
-        <li class="places__card">
-          <div class="places__image" style="background-image: url(./images/place_venice.webp)"></div>
-          <div class="places__description">
-            <h2 class="places__name">Венеция</h2>
-            <button type="button" class="button places__like hover-opacity" aria-label="Нравится"></button>
-          </div>
-        </li>
+         <!-- Сюда вставляем карты из темлейт тега -->
       </ul>
+      <!-- Добавил от себя проверку на контент -->
+      <div class="places__notice">
+        <p>Скорее добавьте свои первые фото. Все так их ждут!</p>
+      </div>
     </section>
   </main>
 
@@ -80,17 +41,51 @@
     <p class="footer__copy">© 2023 <a href="https://github.com/UncleShneerson/" target="_blank" rel="noopener" class="footer__link hover-opacity">Красношлыков Евгений</a></p>
   </footer>
 
-  <!-- PopUp -->
-  <div class="popup">
+  <!-- Template Cards -->
+  <template class="template__cards">
+    <li class="places__card">
+      <div class="places__image" style=""></div>
+      <img src="./images/delete-icon.svg" alt="Удалить" class="places__delete hover-opacity">
+      <div class="places__description">
+        <h2 class="places__name"></h2>
+        <button type="button" class="button places__like hover-opacity" aria-label="Нравится"></button>
+      </div>
+    </li>
+  </template>
+
+  <!-- Popup Profile -->
+  <div class="popup popup_funct_profile">
     <div class="popup__container">
       <button type="button" class="button popup__btn-close hover-opacity" aria-label="Закрыть"></button>
       <h2 class="popup__header">Редактировать профиль</h2>
-      <form class="form" name="profileForm">
+      <form class="form" name="formProfile">
         <input type="text" placeholder="Имя" value="" name="pfName" class="form__input" required>
         <input type="text" placeholder="О себе?" value="" name="pfJob" class="form__input" required>
         <button type="submit" class="button button_style_fill-m">Сохранить</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Popup Cards -->
+  <div class="popup popup_funct_cards">
+    <div class="popup__container">
+      <button type="button" class="button popup__btn-close hover-opacity" aria-label="Закрыть"></button>
+      <h2 class="popup__header">Новое место</h2>
+      <form class="form" name="formCards">
+        <input type="text" placeholder="Название" value="" name="сfName" class="form__input" required>
+        <input type="url" placeholder="Ссылка на картинку" value="" name="сfLink" class="form__input" required>
+        <button type="submit" class="button button_style_fill-m">Сохранить</button>
+      </form>
       </div>
+  </div>
+
+  <!-- Popup Image -->
+  <div class="popup popup_funct_image">
+    <figure class="gallery">
+      <button type="button" class="button popup__btn-close hover-opacity" aria-label="Закрыть"></button>
+      <img class="gallery__photo" src="https://images.unsplash.com/photo-1457195740896-7f345efef228?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Новое место">
+      <figcaption class="gallery__caption">Название</figcaption>
+    </figure>
   </div>
 
   <!-- Подключаем JS -->
