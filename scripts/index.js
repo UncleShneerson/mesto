@@ -62,6 +62,7 @@ function createCard (item) {
   const cardDelete = cardElement.querySelector('.places__delete');
 
   cardName.textContent = item.name;
+  cardImage.alt = item.name;
   cardImage.src = item.link;
 
   //Навешиваем события
