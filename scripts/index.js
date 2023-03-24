@@ -1,171 +1,177 @@
+// Сергей, простите, не могу не сказать. Получил комменты, прочитал, не понял практически 2\3 - жутко надулся на весь день от мысли "НУ ВСЕ ЖЕ РАБОТАЕТ!!!!"
+// уже в конце подумал ну надо же что-то делать. Сел, разобрал последовательно. вник. Сижу смеюсь. Не могу не поблагодарить за все комментарии
+// от всех .next.next.child.nex избавился ) потому что изначально чушь передал в галлерею.
+// имена привел в соответствие и понял что от 90% комментариев можно избавиться, т.к. они дублируют имена.
+// В общем надеюсь ничего не пропустил, но жду еще комментарии, т.к. практика показывает, что сдаю ревью раз на 3й )
+//
+// один вопрос. В карточке я делал картинку div'ом, чтобы через padding-bottom 100% заставлять ее всегда быть квадратной при адаптиве, теперь есть 3 варианта
+// 1) для img я нашел выход в aspect-ratio: 1 но он работает только с середины 21-го года.
+// 2) так же понимаю, что в теории можно по средствам js брать ширину картинки при загрузки страницы и передавать это же значение высотой. (но стоит ли грузить этим систему?)
+// 3) отойти от квадрата и задать высоту всегда 250px
+// я выбрал в.1 в надежде, что все обновились, но может надо решить иначе?
+
+
+
+
 // ПЕРЕМЕННЫЕ
-const content = document.querySelector('.content'); //Содержимое
-const profileName = content.querySelector('.profile__name'); //Имя
-const profileJob = content.querySelector('.profile__description'); //Работа
+const content = document.querySelector('.content');
 
-const btnEdit = content.querySelector('.button_func_edit'); //Кнопка редактировать профиль
-const btnAdd = content.querySelector('.button_func_add'); //Кнопка добавления карточки
-const btnClose = document.querySelectorAll('.popup__btn-close'); //Кнопки закрытия попапов
+const profileName = content.querySelector('.profile__name');
+const profileJob = content.querySelector('.profile__description');
 
-const popupProfile = document.querySelector('.popup_funct_profile'); //Попап Профиль
-const pForm = popupProfile.querySelector('.form'); //Форма профиля
-const nameInput = pForm.querySelector('input[name="pfName"]'); //Поле ввода Имя
-const jobInput = pForm.querySelector('input[name="pfJob"]'); //Поле ввода Работа
+const btnEdit = content.querySelector('.button_func_edit');
+const btnAdd = content.querySelector('.button_func_add');
+const btnClose = document.querySelectorAll('.popup__btn-close');
 
-const popupCards = document.querySelector('.popup_funct_cards'); //Попап Карточки
-const cForm = popupCards.querySelector('.form'); //Форма добавления карточки
+const popupProfile = document.querySelector('.popup_funct_profile');
+const formProfile = popupProfile.querySelector('.form');
+const inputName = formProfile.querySelector('input[name="profile-name"]');
+const inputJob = formProfile.querySelector('input[name="profile-job"]');
 
-const popupGallery = document.querySelector('.popup_funct_image'); //Попап галереи
+const popupCard = document.querySelector('.popup_funct_cards');
+const formCard = popupCard.querySelector('.form');
+const inputCardPlace = formCard.querySelector('input[name="card-place"]');
+const inputCardLink = formCard.querySelector('input[name="card-link"]');
 
-const cardsGrid = document.querySelector('.places__grid'); //Сетка каточек
-const templateCards = document.querySelector('.template__cards').content; //Темплейт шаблон
-const templateCard = templateCards.querySelector('.places__card'); //Карточка места
-const cardName = templateCards.querySelector('.places__name'); // Имя карточки
-const cardImage = templateCards.querySelector('.places__image'); // Картинка карточки
+const popupGallery = document.querySelector('.popup_funct_image');
+const captionGallery = popupGallery.querySelector('.gallery__caption');
+const imageGallery = popupGallery.querySelector('.gallery__photo');
 
-//МАССИВ КАРТОЧЕК
-const initialCards = [
-  {
-    name: 'Австралия',
-    link: './images/place_australia.webp'
-  },
-  {
-    name: 'Бристоль',
-    link: './images/place_bristol.webp'
-  },
-  {
-    name: 'Карибский Бассейн',
-    link: './images/place_carribbean.webp'
-  },
-  {
-    name: 'Мальдивы',
-    link: './images/place_maldives.webp'
-  },
-  {
-    name: 'Мароко',
-    link: './images/place_morocco.webp'
-  },
-  {
-    name: 'Венеция',
-    link: './images/place_venice.webp'
-  }
-];
+const cardsGrid = document.querySelector('.places__grid');
+const template = document.querySelector('.template__cards').content;
+const templateCard = template.querySelector('.places__card');
+
+const noticeNoCard = document.querySelector('.places__notice');
 
 
 
 // ФУНКЦИИ
-//Cтартовые катрочки из массива
-initialCards.forEach(createCard);
+//Заполняем страницу базовыми карточками
+initialCards.forEach(renderCard);
 
-//Создание новой карточки
+function renderCard (item) {
+  cardsGrid.prepend(createCard(item));
+}
+
 function createCard (item) {
-  //Подствляем значения и копируем темплейт
-  cardName.textContent = item.name;
-  cardImage.style.backgroundImage = `url(${item.link})`;
+  //Подствляем значения и копируем темплате
   const cardElement = templateCard.cloneNode(true);
+  const cardName = cardElement.querySelector('.places__name');
+  const cardImage = cardElement.querySelector('.places__image');
+  const cardLike = cardElement.querySelector('.places__like');
+  const cardDelete = cardElement.querySelector('.places__delete');
 
-  //Открыть галерею нажав на картинку
-  cardElement.querySelector('.places__image').addEventListener('click', (evt) => {
-    createGallery (evt.target);
-    popupGallery.classList.toggle('popup_opened');
+  cardName.textContent = item.name;
+  cardImage.src = item.link;
+
+  //Навешиваем события
+  cardImage.addEventListener('click', () => {
+    createGallery (item);
+    openPopup(popupGallery);
   });
 
-  //Действие лайка в карточке
-  cardElement.querySelector('.places__like').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('places__like_active');
+  cardLike.addEventListener('click', (evt) => {
+    likeIt(evt.target);
   });
 
-  //Действие корзины в карточке
-  cardElement.querySelector('.places__delete').addEventListener('click', (evt) => {
-    evt.target.closest('.places__card').remove();
-    //По идее карточка должна еще и удаляться из массива, но подумал, что пока этого можно не делать.
-    //Как решение вижу => создать коллекцию для id => каждой карточке присваивать id и сохранять его в Set
-    // => при удалении карточки как узла - определять id и удалять его из коллекции и из массиваconsole.log();
-
-    areThereCards(); //поверка остались ли карточки
+  cardDelete.addEventListener('click', (evt) => {
+    deleteCard(evt.target);
+    areThereCards();
   });
 
-  //Вставляем карточку в конец
-  cardsGrid.append(cardElement);
+  return cardElement;
 };
 
 
-//Подставление данных в галерею
-function createGallery (item) {
-  const description = item.nextElementSibling.nextElementSibling.firstElementChild.textContent;
-  const url = item.style.backgroundImage.slice(5, -2);
-  const galleryPhoto = popupGallery.querySelector('.gallery__photo');
-
-  galleryPhoto.src = `${url}`;
-  galleryPhoto.alt = popupGallery.querySelector('.gallery__caption').textContent = description;
+function likeIt (item) {
+  item.classList.toggle('places__like_active');
 }
 
 
-//Проверка на наличие карточек - отсебятина
+function deleteCard (item) {
+  item.closest('.places__card').remove()
+}
+
+
+function createGallery (item) {
+  imageGallery.src = item.link;
+  imageGallery.alt = item.name
+  captionGallery.textContent = item.name;
+}
+
+
 function areThereCards () {
-  const notice = document.querySelector('.places__notice');
-if (cardsGrid.firstElementChild === null) {
-  notice.classList.toggle('places__notice_active')} else {
-    notice.classList.remove('places__notice_active');
+  if (cardsGrid.firstElementChild === null) {
+    noticeNoCard.classList.add('places__notice_active');
+  } else {
+    noticeNoCard.classList.remove('places__notice_active');
   };
 };
 
 
-//Открытие и закрытие попапа
-function popupVisibleChange (popupName) {
-  popupName.classList.toggle('popup_opened');
+function openPopup (popupName) {
+  popupName.classList.add('popup_opened');
 }
 
 
-//Редактирование профиля
-function profileEdit () {
-  nameInput.value = profileName.textContent; //Присваиваем значения полям ввода
-  jobInput.value = profileJob.textContent;
-
-  popupVisibleChange (popupProfile); //Открываем попап
+function closePopup (popupName) {
+  popupName.classList.remove('popup_opened');
 }
 
 
-//Сабмит формы редактирования
-function handleFormSubmit (evt) {
+function editProfile () {
+  inputName.value = profileName.textContent;
+  inputJob.value = profileJob.textContent;
+
+  openPopup (popupProfile);
+}
+
+
+function handleSubmitProfileForm (evt) {
   evt.preventDefault(); //Отменяем стандартную отправку, УДАЛИТЬ в будущем
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
+  profileName.textContent = inputName.value;
+  profileJob.textContent = inputJob.value;
 
-  popupVisibleChange (popupProfile); //Закрываем попап
+  closePopup (popupProfile);
 }
 
 
 //Сабмит формы добавления
-function handleCardFormSubmit (evt) {
+function handleSubmitCardForm (evt) {
   evt.preventDefault(); //Отменяем стандартную отправку, УДАЛИТЬ в будущем
 
-  // Создаем объект из полученных значений
-  const cardName = cForm.querySelector('input[name="сfName"]').value; //Вынес в константу для удобства
+  // Получаем данные и передаем в массив, передаем на рендер последний элемент
   const newCardValues = {
-     name: cardName[0].toUpperCase() + cardName.slice(1), //подставляем и капитализируем первую букву
-     link: cForm.querySelector('input[name="сfLink"]').value
+    name: inputCardPlace.value,
+    link: inputCardLink.value
   };
 
-  // Добавляем объект в массив
   initialCards.push(newCardValues);
+  renderCard(initialCards[initialCards.length - 1]);
 
-  //Создаем карту из последего добавленношл в массив объекта
-  createCard(initialCards[initialCards.length - 1]);
+  inputCardPlace.value = '';
+  inputCardLink.value = '';
+
   areThereCards ();
-  popupVisibleChange (popupCards); //Закрываем попап
-
+  closePopup (popupCard);
 }
 
 
 
 // ОТСЛЕЖИВАНИЯ
-btnEdit.addEventListener('click', profileEdit); //Редактировать профиль
-pForm.addEventListener('submit', handleFormSubmit); //Сабмит формы редактирования
+//Редактировать профиль
+btnEdit.addEventListener('click', editProfile);
 
-btnAdd.addEventListener('click', () => {popupVisibleChange(popupCards);});
-cForm.addEventListener('submit', handleCardFormSubmit); //Сабмит формы добавления
+//Сабмит формы редактирования
+formProfile.addEventListener('submit', handleSubmitProfileForm);
 
-btnClose.forEach((item) => {item.addEventListener('click', (evt) => //Закрытия попапов
-  {popupVisibleChange (evt.target.parentElement.parentElement);});
+//Добавить карту
+btnAdd.addEventListener('click', () => {openPopup(popupCard);});
+
+//Сабмит формы добавления
+formCard.addEventListener('submit', handleSubmitCardForm);
+
+//Закрытия попапов
+btnClose.forEach((item) => {item.addEventListener('click', (evt) =>
+  {closePopup(evt.target.closest('.popup'));});
 });
