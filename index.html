@@ -59,9 +59,15 @@
       <button type="button" class="button popup__btn-close hover-opacity" aria-label="Закрыть"></button>
       <h2 class="popup__header">Редактировать профиль</h2>
       <form class="form" name="formProfile">
-        <input type="text" placeholder="Имя" value="" name="profile-name" class="form__input" required>
-        <input type="text" placeholder="О себе?" value="" name="profile-job" class="form__input" required>
-        <button type="submit" class="button button_style_fill-m">Сохранить</button>
+        <label class="form__field">
+          <input type="text" placeholder="Имя" value="" name="profile-name" class="form__input" minlength="2" maxlength="40" required>
+          <span class="form__input-error form__input-error_place_profile-name"></span>
+        </label>
+        <label class="form__field">
+          <input type="text" placeholder="О себе?" value="" name="profile-job" class="form__input" minlength="2" maxlength="200" required>
+          <span class="form__input-error form__input-error_place_profile-job"></span>
+        </label>
+        <button type="submit" class="button button_type_submit button_style_fill-m">Сохранить</button>
       </form>
     </div>
   </div>
@@ -72,9 +78,15 @@
       <button type="button" class="button popup__btn-close hover-opacity" aria-label="Закрыть"></button>
       <h2 class="popup__header">Новое место</h2>
       <form class="form" name="formCards">
-        <input type="text" placeholder="Название" value="" name="card-place" class="form__input" required>
-        <input type="url" placeholder="Ссылка на картинку" value="" name="card-link" class="form__input" required>
-        <button type="submit" class="button button_style_fill-m">Сохранить</button>
+        <label class="form__field">
+          <input type="text" placeholder="Название" value="" name="card-place" class="form__input" minlength="2" maxlength="30" required>
+          <span class="form__input-error form__input-error_place_card-place"></span>
+        </label>
+        <label class="form__field">
+          <input type="url" placeholder="Ссылка на картинку" value="" name="card-link" class="form__input" required>
+          <span class="form__input-error form__input-error_place_card-link"></span>
+        </label>
+        <button type="submit" class="button button_type_submit button_style_fill-m">Сохранить</button>
       </form>
       </div>
   </div>
@@ -82,7 +94,7 @@
   <!-- Popup Image -->
   <div class="popup popup_funct_image">
     <figure class="gallery">
-      <button type="button" class="button popup__btn-close hover-opacity" aria-label="Закрыть"></button>
+      <button type="button" class="button button_type_submit popup__btn-close hover-opacity" aria-label="Закрыть"></button>
       <img class="gallery__photo" src="./images/place_holder.jpeg" alt="Подставляемое значение">
       <figcaption class="gallery__caption"></figcaption>
     </figure>
@@ -90,6 +102,7 @@
 
   <!-- Подключаем JS -->
   <script src="./scripts/cards.js"></script>
+  <script src="./scripts/validate.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 </html>

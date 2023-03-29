@@ -8,6 +8,7 @@ const btnEdit = content.querySelector('.button_func_edit');
 const btnAdd = content.querySelector('.button_func_add');
 const btnCloseList = document.querySelectorAll('.popup__btn-close');
 
+const popupArray = Array.from(document.querySelectorAll('.popup'));
 const popupProfile = document.querySelector('.popup_funct_profile');
 const formProfile = popupProfile.querySelector('.form');
 const inputName = formProfile.querySelector('input[name="profile-name"]');
@@ -36,7 +37,7 @@ initialCards.forEach(renderCard);
 
 function renderCard (item) {
   cardsGrid.prepend(createCard(item));
-}
+};
 
 function createCard (item) {
   //Подствляем значения и копируем темплате
@@ -74,17 +75,17 @@ function likeIt (item) {
 
 
 function deleteCard (item) {
-  item.remove()
-}
+  item.remove();
+};
 
 
 function createGallery (item) {
   imageGallery.src = item.link;
-  imageGallery.alt = item.name
+  imageGallery.alt = item.name;
   captionGallery.textContent = item.name;
 
   openPopup(popupGallery);
-}
+};
 
 
 function areThereCards () {
@@ -97,13 +98,23 @@ function areThereCards () {
 
 
 function openPopup (popupName) {
+  document.addEventListener('keydown', handleCloseByKey);
   popupName.classList.add('popup_opened');
-}
+};
 
 
 function closePopup (popupName) {
+  document.removeEventListener('keydown', handleCloseByKey);
   popupName.classList.remove('popup_opened');
-}
+};
+
+
+function handleCloseByKey (evt) {
+  if (evt.key === 'Escape'){
+    const popupOpened = popupArray.find((item) => item.classList.value.includes('popup_opened'));
+    closePopup(popupOpened)
+  }
+};
 
 
 function editProfile () {
@@ -111,22 +122,18 @@ function editProfile () {
   inputJob.value = profileJob.textContent;
 
   openPopup (popupProfile);
-}
+};
 
 
 function handleSubmitProfileForm (evt) {
-  evt.preventDefault(); //Отменяем стандартную отправку
   profileName.textContent = inputName.value;
   profileJob.textContent = inputJob.value;
 
   closePopup (popupProfile);
-}
+};
 
 
-//Сабмит формы добавления
 function handleSubmitCardForm (evt) {
-  evt.preventDefault(); //Отменяем стандартную отправку
-
   // Получаем данные и передаем в массив, передаем на рендер последний элемент
   const newCardValues = {
     name: inputCardPlace.value,
@@ -134,12 +141,10 @@ function handleSubmitCardForm (evt) {
   };
 
   renderCard(newCardValues);
-
   formCard.reset();
-
   areThereCards ();
   closePopup (popupCard);
-}
+};
 
 
 
@@ -157,6 +162,11 @@ btnAdd.addEventListener('click', () => {openPopup(popupCard);});
 formCard.addEventListener('submit', handleSubmitCardForm);
 
 //Закрытия попапов
-btnCloseList.forEach((item) => {item.addEventListener('click', (evt) =>
-  {closePopup(evt.target.closest('.popup'));});
-});
+btnCloseList.forEach((item) => {item.addEventListener('click', () =>
+  {closePopup(item.closest('.popup'));}
+)});
+
+popupArray.forEach((item) => item.addEventListener('click', (evt) => {
+  if (evt.currentTarget === evt.target) {
+    closePopup(item)};
+}));

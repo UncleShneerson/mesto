@@ -40,6 +40,10 @@
 
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__input/form__input.css);
+@import url(../blocks/form/__input/_type/form__input_type_error.css);
+@import url(../blocks/form/__input-error/form__input-error.css);
+@import url(../blocks/form/__input-error/_visible/form__input-error_visible.css);
+@import url(../blocks/form/__field/form__field.css);
 
 @import url(../blocks/gallery/gallery.css);
 @import url(../blocks/gallery/__photo/gallery__photo.css);
@@ -56,6 +60,7 @@
 @import url(../blocks/button/_func/button_func_add.css);
 @import url(../blocks/button/_func/button_func_edit.css);
 @import url(../blocks/button/_place/button_place_profile.css);
+@import url(../blocks/button/_disabled/button_disabled.css);
 
 /* Анимация линк-ховер переиспользуем из предыдущик проектов */
 @import url(../blocks/hover-opacity/hover-opacity.css);

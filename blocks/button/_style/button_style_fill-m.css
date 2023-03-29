@@ -11,8 +11,9 @@
   border-radius: 2px;
 }
 
-.button_style_fill-m:hover {
+.button_style_fill-m:hover:enabled {
   opacity: 0.8;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 537.5px) {
