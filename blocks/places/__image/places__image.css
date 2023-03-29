@@ -1,8 +1,6 @@
 .places__image {
   width: 100%;
-  height: auto;
-  aspect-ratio: 1;
-  max-height: 282px;
+  height: 282px;
   object-fit: cover;
   object-position: center;
   cursor: pointer;

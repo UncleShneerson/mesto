@@ -39,6 +39,10 @@ function renderCard (item) {
   cardsGrid.prepend(createCard(item));
 };
 
+function isUrlImage (evt) {
+  ;
+}
+
 function createCard (item) {
   //Подствляем значения и копируем темплате
   const cardElement = templateCard.cloneNode(true);
@@ -54,6 +58,10 @@ function createCard (item) {
   //Навешиваем события
   cardImage.addEventListener('click', () => {
     createGallery (item);
+  });
+
+  cardImage.addEventListener('error', () => {
+    cardImage.src = './images/place_holder.jpeg';
   });
 
   cardLike.addEventListener('click', () => {
@@ -111,7 +119,7 @@ function closePopup (popupName) {
 
 function handleCloseByKey (evt) {
   if (evt.key === 'Escape'){
-    const popupOpened = popupArray.find((item) => item.classList.value.includes('popup_opened'));
+    const popupOpened = popupArray.find((item) => item.classList.contains('popup_opened'));
     closePopup(popupOpened)
   }
 };
@@ -125,7 +133,7 @@ function editProfile () {
 };
 
 
-function handleSubmitProfileForm (evt) {
+function handleSubmitProfileForm () {
   profileName.textContent = inputName.value;
   profileJob.textContent = inputJob.value;
 
@@ -133,15 +141,18 @@ function handleSubmitProfileForm (evt) {
 };
 
 
-function handleSubmitCardForm (evt) {
+function handleSubmitCardForm () {
+  const submitBtn = formCard.querySelector(config.submitButtonSelector);
+  const inputList = Array.from(formCard.querySelectorAll(config.inputSelector));
   // Получаем данные и передаем в массив, передаем на рендер последний элемент
   const newCardValues = {
     name: inputCardPlace.value,
     link: inputCardLink.value
   };
-
   renderCard(newCardValues);
   formCard.reset();
+
+  toggleSubmitBtnState(inputList, submitBtn);
   areThereCards ();
   closePopup (popupCard);
 };

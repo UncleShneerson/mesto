@@ -58,7 +58,7 @@
     <div class="popup__container">
       <button type="button" class="button popup__btn-close hover-opacity" aria-label="Закрыть"></button>
       <h2 class="popup__header">Редактировать профиль</h2>
-      <form class="form" name="formProfile">
+      <form class="form" name="formProfile" novalidate>
         <label class="form__field">
           <input type="text" placeholder="Имя" value="" name="profile-name" class="form__input" minlength="2" maxlength="40" required>
           <span class="form__input-error form__input-error_place_profile-name"></span>
@@ -77,7 +77,7 @@
     <div class="popup__container">
       <button type="button" class="button popup__btn-close hover-opacity" aria-label="Закрыть"></button>
       <h2 class="popup__header">Новое место</h2>
-      <form class="form" name="formCards">
+      <form class="form" name="formCards" novalidate>
         <label class="form__field">
           <input type="text" placeholder="Название" value="" name="card-place" class="form__input" minlength="2" maxlength="30" required>
           <span class="form__input-error form__input-error_place_card-place"></span>

@@ -66,6 +66,7 @@ function hideInputError (formElement, inputElement) {
   const errorSpanElement = formElement.querySelector(`${config.spanErrorSelector}${inputElement.name}`);
 
   errorSpanElement.classList.remove(config.spanErrorClassToggle);
+  errorSpanElement.textContent = '';
   inputElement.classList.remove(config.inputErrorClass);
 };
 
