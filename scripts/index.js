@@ -39,9 +39,6 @@ function renderCard (item) {
   cardsGrid.prepend(createCard(item));
 };
 
-function isUrlImage (evt) {
-  ;
-}
 
 function createCard (item) {
   //Подствляем значения и копируем темплате
@@ -56,12 +53,10 @@ function createCard (item) {
   cardImage.src = item.link;
 
   //Навешиваем события
-  cardImage.addEventListener('click', () => {
-    createGallery (item);
-  });
+  cardImage.addEventListener('click', createGallery);
 
   cardImage.addEventListener('error', () => {
-    cardImage.src = './images/place_holder.jpeg';
+    replaceImageError(cardImage);
   });
 
   cardLike.addEventListener('click', () => {
@@ -77,21 +72,27 @@ function createCard (item) {
 };
 
 
+function replaceImageError (imageElement) {
+  imageElement.src = './images/place_holder.jpeg';
+  imageElement.classList.add('places__image_error');
+  imageElement.removeEventListener('click', createGallery);
+};
+
+
 function likeIt (item) {
   item.classList.toggle('places__like_active');
 }
 
 
-function deleteCard (item) {
-  item.remove();
+function deleteCard (cardElement) {
+  cardElement.remove();
 };
 
 
-function createGallery (item) {
-  imageGallery.src = item.link;
-  imageGallery.alt = item.name;
-  captionGallery.textContent = item.name;
-
+function createGallery (evt) {
+  imageGallery.src = evt.target.src;
+  imageGallery.alt = evt.target.alt;
+  captionGallery.textContent = evt.target.alt;
   openPopup(popupGallery);
 };
 
