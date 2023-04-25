@@ -1,3 +1,11 @@
+// МОДУЛИ
+import {initialCards, validationConfig} from './data.js';
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
+export {openPopup};
+
+
+
 // ПЕРЕМЕННЫЕ
 const content = document.querySelector('.content');
 
@@ -19,91 +27,20 @@ const formCard = popupCard.querySelector('.form');
 const inputCardPlace = formCard.querySelector('input[name="card-place"]');
 const inputCardLink = formCard.querySelector('input[name="card-link"]');
 
-const popupGallery = document.querySelector('.popup_funct_image');
-const captionGallery = popupGallery.querySelector('.gallery__caption');
-const imageGallery = popupGallery.querySelector('.gallery__photo');
-
-const cardsGrid = document.querySelector('.places__grid');
-const template = document.querySelector('.template__cards').content;
-const templateCard = template.querySelector('.places__card');
-
-const noticeNoCard = document.querySelector('.places__notice');
-
 
 
 // ФУНКЦИИ
-//Заполняем страницу базовыми карточками
-initialCards.forEach(renderCard);
+// Наполняем страницу карточками
+initialCards.forEach (item => {
+  new Card(item, '.template__cards').renderCard();
+});
 
-function renderCard (item) {
-  cardsGrid.prepend(createCard(item));
-};
+// Включаем валидацию
+const formProfileValidator = new FormValidator(validationConfig, formProfile);
+formProfileValidator.enableValidation();
 
-
-function createCard (item) {
-  //Подствляем значения и копируем темплате
-  const cardElement = templateCard.cloneNode(true);
-  const cardName = cardElement.querySelector('.places__name');
-  const cardImage = cardElement.querySelector('.places__image');
-  const cardLike = cardElement.querySelector('.places__like');
-  const cardDelete = cardElement.querySelector('.places__delete');
-
-  cardName.textContent = item.name;
-  cardImage.alt = item.name;
-  cardImage.src = item.link;
-
-  //Навешиваем события
-  cardImage.addEventListener('click', createGallery);
-
-  cardImage.addEventListener('error', () => {
-    replaceImageError(cardImage);
-  });
-
-  cardLike.addEventListener('click', () => {
-    likeIt(cardLike);
-  });
-
-  cardDelete.addEventListener('click', () => {
-    deleteCard(cardElement);
-    areThereCards();
-  });
-
-  return cardElement;
-};
-
-
-function replaceImageError (imageElement) {
-  imageElement.src = './images/place_holder.jpeg';
-  imageElement.classList.add('places__image_error');
-  imageElement.removeEventListener('click', createGallery);
-};
-
-
-function likeIt (item) {
-  item.classList.toggle('places__like_active');
-}
-
-
-function deleteCard (cardElement) {
-  cardElement.remove();
-};
-
-
-function createGallery (evt) {
-  imageGallery.src = evt.target.src;
-  imageGallery.alt = evt.target.alt;
-  captionGallery.textContent = evt.target.alt;
-  openPopup(popupGallery);
-};
-
-
-function areThereCards () {
-  if (cardsGrid.firstElementChild === null) {
-    noticeNoCard.classList.add('places__notice_active');
-  } else {
-    noticeNoCard.classList.remove('places__notice_active');
-  };
-};
+const formCardValidator = new FormValidator(validationConfig, formCard);
+formCardValidator.enableValidation();
 
 
 function openPopup (popupName) {
@@ -143,18 +80,16 @@ function handleSubmitProfileForm () {
 
 
 function handleSubmitCardForm () {
-  const submitBtn = formCard.querySelector(config.submitButtonSelector);
-  const inputList = Array.from(formCard.querySelectorAll(config.inputSelector));
-  // Получаем данные и передаем в массив, передаем на рендер последний элемент
   const newCardValues = {
     name: inputCardPlace.value,
     link: inputCardLink.value
   };
-  renderCard(newCardValues);
+
+  new Card(newCardValues, '.template__cards').renderCard();
+
   formCard.reset();
 
-  toggleSubmitBtnState(inputList, submitBtn);
-  areThereCards ();
+  formCardValidator.toggleSubmitBtnState();
   closePopup (popupCard);
 };
 

@@ -1,3 +1,6 @@
+export {initialCards, validationConfig};
+
+
 //КАРТОЧКИ МЕСТ
 const initialCards = [
   {
@@ -25,3 +28,18 @@ const initialCards = [
     link: './images/place_venice.webp'
   }
 ];
+
+
+
+//КОНФИГ ВАЛИДАЦИИ
+const validationConfig = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  inputErrorClass: 'form__input_type_error',
+  submitButtonSelector: '.button_type_submit',
+
+  spanErrorSelector: '.form__input-error_place_',
+  spanErrorClassToggle: 'form__input-error_visible',
+
+  inactiveButtonClass: 'button_disabled',
+};
