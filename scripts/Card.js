@@ -1,11 +1,11 @@
-import {openPopup} from './index.js';
+import {popupGallery, captionGallery, imageGallery} from './variables.js';
+import {openPopup, areThereCards} from './utils/utils.js';
 
 export class Card {
   constructor(data, templateSelector) {
     this._text = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
-    this._cardsGrid = document.querySelector('.places__grid');
   };
 
   _getTemplate() {
@@ -18,7 +18,7 @@ export class Card {
     return cardElement;
   };
 
-  _generateCard() {
+  generateCard() {
     this._element = this._getTemplate();
     this._cardName = this._element.querySelector('.places__name');
     this._cardImage = this._element.querySelector('.places__image');
@@ -34,14 +34,14 @@ export class Card {
     return this._element;
   };
 
-  _setEventListeners (item) {
+  _setEventListeners () {
     this._likeIcon.addEventListener('click', () => {
       this._likeIt(this._likeIcon);
     });
 
     this._deleteIcon.addEventListener('click', () => {
       this._deleteCard(this._element);
-      this._areThereCards();
+      areThereCards();
     });
 
     this._cardImage.addEventListener('error', () => {
@@ -50,12 +50,6 @@ export class Card {
 
     this._cardImage.addEventListener('click', this._openGallery);
   };
-
-  renderCard() {
-    const newCard = this._generateCard();
-    this._cardsGrid.prepend(newCard);
-    this._areThereCards();
-  }
 
   _deleteCard(item) {
     item.remove();
@@ -66,10 +60,6 @@ export class Card {
   };
 
   _openGallery(evt) {
-    const popupGallery = document.querySelector('.popup_funct_image');
-    const captionGallery = popupGallery.querySelector('.gallery__caption');
-    const imageGallery = popupGallery.querySelector('.gallery__photo');
-
     imageGallery.src = evt.target.src;
     imageGallery.alt = evt.target.alt;
     captionGallery.textContent = evt.target.alt;
@@ -82,13 +72,4 @@ export class Card {
     imageElement.classList.add('places__image_error');
     imageElement.removeEventListener('click', this._openGallery);
   };
-
-  _areThereCards() {
-    const noticeNoCard = document.querySelector('.places__notice');
-    if (this._cardsGrid.firstElementChild === null) {
-      noticeNoCard.classList.add('places__notice_active');
-    } else {
-      noticeNoCard.classList.remove('places__notice_active');
-    };
-  };
-}
+};

@@ -17,7 +17,6 @@ export class FormValidator {
     this._setInputEventListeners();
   };
 
-
   _setInputEventListeners() {
     this._inputList = Array.from(this._form.querySelectorAll(this._inputSelector));
     this._buttonElement = this._form.querySelector(this._submitButtonSelector);
@@ -32,7 +31,6 @@ export class FormValidator {
     });
   }
 
-
   _checkInputValidity (inputElement) {
     if (!inputElement.validity.valid) {
       this._showInputError(inputElement, inputElement.validationMessage);
@@ -41,14 +39,12 @@ export class FormValidator {
     }
   };
 
-
   _showInputError (inputElement, validationMessage) {
     const errorSpanElement = this._form.querySelector(`${this._spanErrorSelector}${inputElement.name}`);
    errorSpanElement.textContent = validationMessage;
     errorSpanElement.classList.add(this._spanErrorClassToggle);
     inputElement.classList.add(this._inputErrorClass);
   };
-
 
   _hideInputError (inputElement) {
     const errorSpanElement = this._form.querySelector(`${this._spanErrorSelector}${inputElement.name}`);
@@ -67,7 +63,6 @@ export class FormValidator {
       this._buttonElement.removeAttribute('disabled');
     }
   };
-
 
   _hasInvalidInput () {
     return this._inputList.some((input) => {
