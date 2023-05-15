@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
-  <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
+  <!-- <link rel="icon" type="image/x-icon" href="./images/favicon.ico"> -->
   <title>Место. Россия</title>
 </head>
 <body class="root">
   <header class="header">
-    <img src="./images/mesto-logo.svg" alt="Логотип. Место. Россия." class="header__logo">
+    <img src="<%=require('./images/mesto-logo.svg')%>" alt="Логотип. Место. Россия." class="header__logo">
   </header>
 
   <main class="content">
     <section class="profile">
-      <img src="./images/avatar.jpg" alt="Ваш аватар" class="profile__avatar">
+      <img src="<%=require('./images/avatar.jpg')%>" alt="Ваш аватар" class="profile__avatar">
       <div class="profile__column-info">
           <div class="profile__name-row">
             <h1 class="profile__name">Жак Ив Кусто</h1>
@@ -44,8 +44,8 @@
   <!-- Template Cards -->
   <template class="template__cards">
     <li class="places__card">
-      <img class="places__image" src="./images/place_holder.jpeg">
-      <img src="./images/delete-icon.svg" alt="Удалить" class="places__delete hover-opacity">
+      <img class="places__image" src="">
+      <img src="<%=require('./images/delete-icon.svg')%>" alt="Удалить" class="places__delete hover-opacity">
       <div class="places__description">
         <h2 class="places__name">Подставляемое значение</h2>
         <button type="button" class="button places__like hover-opacity" aria-label="Нравится"></button>
@@ -60,12 +60,12 @@
       <h2 class="popup__header">Редактировать профиль</h2>
       <form class="form" name="formProfile" novalidate>
         <label class="form__field">
-          <input type="text" placeholder="Имя" value="" name="profile-name" class="form__input" minlength="2" maxlength="40" required>
-          <span class="form__input-error form__input-error_place_profile-name"></span>
+          <input type="text" placeholder="Имя" value="" name="userName" class="form__input" minlength="2" maxlength="40" required>
+          <span class="form__input-error form__input-error_place_userName"></span>
         </label>
         <label class="form__field">
-          <input type="text" placeholder="О себе?" value="" name="profile-job" class="form__input" minlength="2" maxlength="200" required>
-          <span class="form__input-error form__input-error_place_profile-job"></span>
+          <input type="text" placeholder="О себе?" value="" name="userDescription" class="form__input" minlength="2" maxlength="200" required>
+          <span class="form__input-error form__input-error_place_userDescription"></span>
         </label>
         <button type="submit" class="button button_type_submit button_style_fill-m">Сохранить</button>
       </form>
@@ -79,12 +79,12 @@
       <h2 class="popup__header">Новое место</h2>
       <form class="form" name="formCards" novalidate>
         <label class="form__field">
-          <input type="text" placeholder="Название" value="" name="card-place" class="form__input" minlength="2" maxlength="30" required>
-          <span class="form__input-error form__input-error_place_card-place"></span>
+          <input type="text" placeholder="Название" value="" name="cardPlace" class="form__input" minlength="2" maxlength="30" required>
+          <span class="form__input-error form__input-error_place_cardPlace"></span>
         </label>
         <label class="form__field">
-          <input type="url" placeholder="Ссылка на картинку" value="" name="card-link" class="form__input" required>
-          <span class="form__input-error form__input-error_place_card-link"></span>
+          <input type="url" placeholder="Ссылка на картинку" value="" name="cardLink" class="form__input" required>
+          <span class="form__input-error form__input-error_place_cardLink"></span>
         </label>
         <button type="submit" class="button button_type_submit button_style_fill-m">Сохранить</button>
       </form>
@@ -95,12 +95,12 @@
   <div class="popup popup_funct_image">
     <figure class="gallery">
       <button type="button" class="button button_type_submit popup__btn-close hover-opacity" aria-label="Закрыть"></button>
-      <img class="gallery__photo" src="./images/place_holder.jpeg" alt="Подставляемое значение">
+      <img class="gallery__photo" src="" alt="Подставляемое значение">
       <figcaption class="gallery__caption"></figcaption>
     </figure>
   </div>
 
   <!-- Подключаем JS -->
-  <script type="module" src="./scripts/index.js"></script>
+  <!-- <script type="module" src="./scripts/index.js"></script> -->
 </body>
 </html>

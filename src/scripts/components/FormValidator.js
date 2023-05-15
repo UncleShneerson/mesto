@@ -1,4 +1,4 @@
-export class FormValidator {
+export default class FormValidator {
   constructor(config, form) {
     this._form = form;
     this._inputSelector = config.inputSelector;
@@ -7,7 +7,7 @@ export class FormValidator {
     this._spanErrorSelector = config.spanErrorSelector;
     this._spanErrorClassToggle = config.spanErrorClassToggle;
     this._inactiveButtonClass = config.inactiveButtonClass;
-  }
+  };
 
   enableValidation() {
     this._form.addEventListener('submit', (evt) => {
@@ -53,7 +53,6 @@ export class FormValidator {
     inputElement.classList.remove(this._inputErrorClass);
   };
 
-  // Второй публичный метод необходим, т.к. к нему обращаемся при сабмите формы.
   toggleSubmitBtnState () {
     if(this._hasInvalidInput()) {
       this._buttonElement.classList.add(this._inactiveButtonClass);

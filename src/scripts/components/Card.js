@@ -1,11 +1,15 @@
-import {popupGallery, captionGallery, imageGallery} from './variables.js';
-import {openPopup, areThereCards} from './utils/utils.js';
+// WEBPACK IMPORT
+const errorImage = new URL('../../images/place_holder.jpg', import.meta.url);
 
-export class Card {
-  constructor(data, templateSelector) {
+//СLASS
+import {areThereCards} from '../utils/utils.js';
+
+export default class Card {
+  constructor(data, templateSelector, handleCardClick) {
     this._text = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
+    this._handleCardClick = handleCardClick;
   };
 
   _getTemplate() {
@@ -48,27 +52,21 @@ export class Card {
       this._replaceImageError(this._cardImage);
     });
 
-    this._cardImage.addEventListener('click', this._openGallery);
+    this._cardImage.addEventListener('click', this._handleCardClick);
   };
 
   _deleteCard(item) {
     item.remove();
+
   };
 
   _likeIt (item) {
     item.classList.toggle('places__like_active');
   };
 
-  _openGallery(evt) {
-    imageGallery.src = evt.target.src;
-    imageGallery.alt = evt.target.alt;
-    captionGallery.textContent = evt.target.alt;
-
-    openPopup(popupGallery);
-  };
-
   _replaceImageError(imageElement) {
-    imageElement.src = './images/place_holder.jpeg';
+    // imageElement.src = './images/place_holder.jpg';
+    imageElement.src = errorImage;
     imageElement.classList.add('places__image_error');
     imageElement.removeEventListener('click', this._openGallery);
   };
