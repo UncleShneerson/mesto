@@ -1,15 +1,17 @@
 // WEBPACK IMPORT
-const errorImage = new URL('../../images/place_holder.jpg', import.meta.url);
+const errorImage = new URL('../images/place_holder.jpg', import.meta.url);
 
 //СLASS
-import {areThereCards} from '../utils/utils.js';
-
 export default class Card {
-  constructor(data, templateSelector, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick, handleDeleteClick) {
     this._text = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteClick = handleDeleteClick.bind(this);
+    this._likeIt = this._likeIt.bind(this)
+    this._likeIt = this._likeIt.bind(this)
+
   };
 
   _getTemplate() {
@@ -39,35 +41,26 @@ export default class Card {
   };
 
   _setEventListeners () {
-    this._likeIcon.addEventListener('click', () => {
-      this._likeIt(this._likeIcon);
-    });
+    this._likeIcon.addEventListener('click', this._likeIt);
 
-    this._deleteIcon.addEventListener('click', () => {
-      this._deleteCard(this._element);
-      areThereCards();
-    });
+    this._deleteIcon.addEventListener('click', this._handleDeleteClick);
 
-    this._cardImage.addEventListener('error', () => {
-      this._replaceImageError(this._cardImage);
-    });
+    this._cardImage.addEventListener('error', () => {this._imageError()});
 
     this._cardImage.addEventListener('click', this._handleCardClick);
   };
 
-  _deleteCard(item) {
-    item.remove();
-
+  deleteCard() {
+    this._element.remove();
   };
 
-  _likeIt (item) {
-    item.classList.toggle('places__like_active');
+  _likeIt () {
+    this._likeIcon.classList.toggle('places__like_active');
   };
 
-  _replaceImageError(imageElement) {
-    // imageElement.src = './images/place_holder.jpg';
-    imageElement.src = errorImage;
-    imageElement.classList.add('places__image_error');
-    imageElement.removeEventListener('click', this._openGallery);
+  _imageError() {
+    this._cardImage.src = errorImage;
+    this._cardImage.classList.add('places__image_error');
+    this._cardImage.removeEventListener('click', this._handleCardClick);
   };
 };

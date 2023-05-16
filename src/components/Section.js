@@ -11,13 +11,7 @@ export default class Section {
     });
   };
 
-  addItem(item, wrapper) {
-    let _itemContainer
-
-    const isWrapper = wrapper
-    ? _itemContainer = this._container.querySelector(wrapper)
-    : _itemContainer = this._container;
-
-    _itemContainer.prepend(item);
+  addItem(item) {
+    this._container.prepend(item);
   };
 }

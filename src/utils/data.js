@@ -1,10 +1,10 @@
 // WEBPACK IMPORT
-const australiaImage = new URL('../../images/place_australia.webp', import.meta.url);
-const bristolImage = new URL('../../images/place_bristol.webp', import.meta.url);
-const carribbeanImage = new URL('../../images/place_carribbean.webp', import.meta.url);
-const maldivesImage = new URL('../../images/place_maldives.webp', import.meta.url);
-const moroccoImage = new URL('../../images/place_morocco.webp', import.meta.url);
-const veniceImage = new URL('../../images/place_venice.webp', import.meta.url);
+const australiaImage = new URL('../images/place_australia.webp', import.meta.url);
+const bristolImage = new URL('../images/place_bristol.webp', import.meta.url);
+const carribbeanImage = new URL('../images/place_carribbean.webp', import.meta.url);
+const maldivesImage = new URL('../images/place_maldives.webp', import.meta.url);
+const moroccoImage = new URL('../images/place_morocco.webp', import.meta.url);
+const veniceImage = new URL('../images/place_venice.webp', import.meta.url);
 
 //КАРТОЧКИ МЕСТ
 export const initialCards = [
