@@ -41,14 +41,14 @@ export default class FormValidator {
 
   _showInputError (inputElement, validationMessage) {
     const errorSpanElement = this._form.querySelector(`${this._spanErrorSelector}${inputElement.name}`);
-   errorSpanElement.textContent = validationMessage;
+    errorSpanElement.textContent = validationMessage;
     errorSpanElement.classList.add(this._spanErrorClassToggle);
     inputElement.classList.add(this._inputErrorClass);
   };
 
   _hideInputError (inputElement) {
     const errorSpanElement = this._form.querySelector(`${this._spanErrorSelector}${inputElement.name}`);
-   errorSpanElement.classList.remove(this._spanErrorClassToggle);
+    errorSpanElement.classList.remove(this._spanErrorClassToggle);
     errorSpanElement.textContent = '';
     inputElement.classList.remove(this._inputErrorClass);
   };
