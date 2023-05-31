@@ -5,19 +5,17 @@ export default class Api {
     this._token = headers['authorization'];
   }
 
-  getInitialCards (callbackFunction) {
-    fetch(`${this._baseUrl}/cards`, {
+  getInitialCards () {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: {
         authorization: this._token
       }
     })
     .then(this._isItOk)
-    .then(callbackFunction)
-    .catch(this._error)
   }
 
-  postCard (newCardData, callbackFunction) {
-    fetch(`${this._baseUrl}/cards`, {
+  postCard (newCardData) {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: {
         authorization: this._token,
@@ -29,59 +27,49 @@ export default class Api {
       })
     })
     .then(this._isItOk)
-    .then(callbackFunction)
-    .catch(this._error)
   }
 
-  deleteCard (cardId, callbackFunction) {
-    fetch(`${this._baseUrl}/cards/${cardId}`, {
+  deleteCard (cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._token
       }
     })
     .then(this._isItOk)
-    .then(callbackFunction)
-    .catch(this._error)
   }
 
-  addLike (cardId, callbackFunction) {
-    fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  addLike (cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: {
         authorization: this._token
       }
     })
     .then(this._isItOk)
-    .then(callbackFunction)
-    .catch(this._error)
   }
 
-  deleteLike (cardId, callbackFunction) {
-    fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+  deleteLike (cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: {
         authorization: this._token
       }
     })
     .then(this._isItOk)
-    .then(callbackFunction)
-    .catch(this._error)
   }
 
-  getUserInfo (callbackFunction) {
-    fetch(`${this._baseUrl}/users/me`, {
+  getUserInfo () {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         authorization: this._token
       }
     })
       .then(this._isItOk)
-      .then(callbackFunction)
-      .catch(this._error)
   }
 
-  editUserInfo (data, callbackFunction) {
-    fetch(`${this._baseUrl}/users/me`, {
+  editUserInfo (data) {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: this._token,
@@ -94,12 +82,10 @@ export default class Api {
       })
     })
     .then(this._isItOk)
-    .then(callbackFunction)
-    .catch(this._error)
   }
 
-  editUserAvatar (data, callbackFunction) {
-    fetch(`${this._baseUrl}/users/me/avatar`, {
+  editUserAvatar (data) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         authorization: this._token,
@@ -110,8 +96,6 @@ export default class Api {
       })
     })
     .then(this._isItOk)
-    .then(callbackFunction)
-    .catch(this._error)
   }
 
   _isItOk(res) {
@@ -120,15 +104,5 @@ export default class Api {
     } else {
     return Promise.reject(`Ошибка: ${res.status}`);
     }
-  }
-
-  _error(err) {
-    alert(`
-      К сожалению что-то пошло не так.
-      ${err}
-
-      Перепроверьте данные
-      и повторите попытку
-    `);
   }
 }

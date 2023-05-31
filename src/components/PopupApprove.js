@@ -17,6 +17,5 @@ export default class PopupApprove extends PopupWithForm {
   close() {
     super.close();
     this.setData('');
-    this._submitButton.textContent = 'ДА';
   };
 }

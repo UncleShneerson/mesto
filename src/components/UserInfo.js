@@ -17,6 +17,10 @@ export default class UserInfo {
     if (name) {this._name.textContent = name};
     if (about) {this._about.textContent = about};
     if (avatar) {this._avatar.src = avatar};
-    this.info = info;
+    this._info = info;
   };
+
+  getId() {
+    return this._info._id;
+  }
 }

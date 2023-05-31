@@ -3,17 +3,24 @@ const errorImage = new URL('../images/place_holder.jpg', import.meta.url);
 
 //СLASS
 export default class Card {
-  constructor(data, templateSelector, handleCardClick, handleDeleteClick, handleLikeClick) {
-    this.data = data;
-    this._text = this.data.name;
-    this._image = this.data.link;
-    this.id = this.data._id;
+  constructor(data, templateSelector, userId, handleCardClick, handleDeleteClick, handleLikeClick) {
+    this._data = data;
+    this._text = this._data.name;
+    this._image = this._data.link;
+    this._id = this._data._id;
+    this._ownerId = this._data.owner._id;
+    this._userId = userId;
+    this._likesArray = data.likes;
     this._templateSelector = templateSelector;
     this._handleLikeClick = handleLikeClick;
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick.bind(this);
     this.likeIt = this.likeIt.bind(this);
   };
+
+  getId() {
+    return this._id;
+  }
 
   _getTemplate() {
     const cardElement = document
@@ -25,6 +32,10 @@ export default class Card {
     return cardElement;
   };
 
+  _isUserOwner() {
+    return this._ownerId === this._userId;
+  }
+
   generateCard() {
     this._element = this._getTemplate();
     this._cardName = this._element.querySelector('.places__name');
@@ -35,10 +46,20 @@ export default class Card {
     this._cardName.textContent = this._text;
     this._cardImage.alt = this._text;
     this._cardImage.src = this._image;
-    this._likeNumber.textContent = this.data.likes.length;
+    this._likeNumber.textContent = this._data.likes.length;
+    this._isUserLike;
+
+    // если я не автор - убрать удаление
+    if (!this._isUserOwner()) {
+      this._deleteIcon.classList.add('places__delete_inactive')
+    };
+
+    //если я лайкал - показать
+    if (this.didILikedIt()) {
+      this.likeIt();
+    }
 
     this._setEventListeners(this._element);
-
     return this._element;
   };
 
@@ -60,10 +81,16 @@ export default class Card {
     this._likeIcon.classList.toggle('places__like_active');
   };
 
-  setLikesNumber (number) {
-    this._likeNumber.textContent = `${number}`;
+  didILikedIt() {
+    return this._likesArray.some((item) => {
+      return item._id === this._userId;
+    })
   }
 
+  setLikesNumber (likesArray) {
+    this._likeNumber.textContent = `${likesArray.length}`;
+    this._likesArray = likesArray;
+  };
 
   _imageError() {
     this._cardImage.src = errorImage;

@@ -1,3 +1,16 @@
+// Сергей, как всегда огромное спасибо за все комментарии и дополнительные материалы,
+// внимательно прочел обе статьи и надеюсь на этот раз выполнил все верно )
+
+// Отдельное спасибо за расписанный Promise.all с удовольствием улучшил эту часть
+
+// отловил ошибку (что если ставить лайк и сразу снимать - цифры не менялись без обновления страницы,
+// правда не знаю правильным ли образом поправил)
+
+// в любом случае всегда рад дополнительным замечаниям
+
+// Хорошего дня и еще раз спасибо )
+
+
 //ИМПОРТЫ WEBPACK
 import '../pages/index.css';
 
@@ -23,12 +36,26 @@ const api = new Api({
   }
 });
 
+function showErrorApi (err) {
+  alert(`
+      К сожалению что-то пошло не так.
+      ${err}
+
+      Перепроверьте данные
+      и повторите попытку
+    `);
+}
+
 // НАПОЛНЕНИЕ ДАННЫМИ
-//Наполняем страницу сначала данными пользователя затем карточек
-api.getUserInfo((res) => {
-  thisUser.setUserInfo(res);
-  getInitialCards(thisUser.info._id);
-});
+//Наполняем страницу данными пользователя и карточек одновременно!
+Promise.all([
+  api.getUserInfo(),
+  api.getInitialCards() ])
+.then(([info, initialCards])=>{
+  thisUser.setUserInfo(info);
+  cardSection.renderItems(initialCards);
+})
+.catch((err)=>{showErrorApi(err)});
 
 // ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ
 const thisUser = new UserInfo({
@@ -47,32 +74,11 @@ function renderCard (item) {
 }
 
 function createCard (item) {
-  const cardElement = new Card(item, '.template__cards', handleCardClick, handleDeleteClick, handleLikeClick).generateCard();
-
-  isShowDeleteButton (cardElement, item.owner._id);
-  isShowLike (item, cardElement);
+  const myId = thisUser.getId();
+  const card = new Card(item, '.template__cards', myId, handleCardClick, handleDeleteClick, handleLikeClick);
+  const cardElement = card.generateCard();
 
   return cardElement;
-}
-
-function isShowDeleteButton (card, cardOwnerId) {
-  if (cardOwnerId !== thisUser.info._id) {
-    card.querySelector('.places__delete')
-      .classList.add('places__delete_inactive');
-  }
-}
-
-function isShowLike (card, cardElement) {
-  if (didILikeIt(card.likes)) {
-    cardElement.querySelector('.places__like')
-      .classList.add('places__like_active');
-  }
-}
-
-function didILikeIt (likesArray) {
-  return likesArray.some((item) => {
-    return item._id === thisUser.info._id
-  })
 }
 
 function handleCardClick () {
@@ -85,32 +91,29 @@ function handleDeleteClick() {
 }
 
 function handleLikeClick (card) {
-  if (!didILikeIt(card.data.likes)) {
-    setLike(card);
+  if (!card.didILikedIt()) {
+     setLike(card);
   } else {
-    deleteLike(card);
+     deleteLike(card);
   }
 }
 
 function setLike (card) {
-  api.addLike (card.id, (res) => {
+  api.addLike (card.getId())
+  .then((res) => {
+    card.setLikesNumber(res.likes);
     card.likeIt();
-    card.setLikesNumber(res.likes.length);
   })
+  .catch(err => showErrorApi(err))
 }
 
 function deleteLike (card) {
-  api.deleteLike (card.id, (res) => {
+  api.deleteLike(card.getId())
+  .then((res) => {
+    card.setLikesNumber(res.likes);
     card.likeIt();
-    card.setLikesNumber(res.likes.length);
   })
-}
-
-// Наполнение страницы стартовыми карточками
-function getInitialCards () {
-  api.getInitialCards((res) => {
-    cardSection.renderItems(res);
-  });
+  .catch(err => showErrorApi(err))
 }
 
 // ПОПАПЫ
@@ -144,10 +147,13 @@ function openProfileForm () {
 };
 
 function handleSubmitAvatarForm (formData) {
-  api.editUserAvatar(formData, (res) => {
+  api.editUserAvatar(formData)
+  .then((res) => {
     thisUser.setUserInfo(res);
     popupAvatar.close();
   })
+  .catch(err => showErrorApi(err))
+  .finally(() => {popupAvatar.btnReset()})
 }
 
 function handleSubmitProfileForm (formData) {
@@ -156,12 +162,13 @@ function handleSubmitProfileForm (formData) {
     {
       name: userName,
       about: userDescription
-    },
-    (res) => {
-      thisUser.setUserInfo(res);
-      popupProfile.close();
-    }
-  );
+    })
+  .then((res) => {
+    thisUser.setUserInfo(res);
+    popupProfile.close();
+  })
+  .catch(err => showErrorApi(err))
+  .finally(() => {popupProfile.btnReset()})
 };
 
 function handleSubmitCardForm (formData) {
@@ -171,18 +178,23 @@ function handleSubmitCardForm (formData) {
     link: cardLink
   };
 
-  api.postCard(newCardData, (res) => {
-      renderCard(res);
-      popupCard.close();
-    }
-  );
+  api.postCard(newCardData)
+  .then((res) => {
+    renderCard(res);
+    popupCard.close();
+  })
+  .catch(err => showErrorApi(err))
+  .finally(() => {popupCard.btnReset()})
 };
 
 function handleSubmitDeleteForm (card) {
-  api.deleteCard(card.id, () => {
-     card.deleteCard();
-     popupDeleteApprove.close();
-  });
+  api.deleteCard(card.getId())
+  .then(() => {
+    card.deleteCard();
+    popupDeleteApprove.close();
+  })
+  .catch(err => showErrorApi(err))
+  .finally(() => {popupDeleteApprove.btnReset()});
 }
 
 // ВАЛИДАЦИЯ
