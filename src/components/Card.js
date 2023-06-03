@@ -15,7 +15,6 @@ export default class Card {
     this._handleLikeClick = handleLikeClick;
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick.bind(this);
-    this.likeIt = this.likeIt.bind(this);
   };
 
   getId() {
@@ -46,18 +45,13 @@ export default class Card {
     this._cardName.textContent = this._text;
     this._cardImage.alt = this._text;
     this._cardImage.src = this._image;
-    this._likeNumber.textContent = this._data.likes.length;
-    this._isUserLike;
 
     // если я не автор - убрать удаление
     if (!this._isUserOwner()) {
       this._deleteIcon.classList.add('places__delete_inactive')
     };
 
-    //если я лайкал - показать
-    if (this.didILikedIt()) {
-      this.likeIt();
-    }
+    this.setLikesNumber(this._likesArray);
 
     this._setEventListeners(this._element);
     return this._element;
@@ -77,10 +71,6 @@ export default class Card {
     this._element.remove();
   };
 
-  likeIt () {
-    this._likeIcon.classList.toggle('places__like_active');
-  };
-
   didILikedIt() {
     return this._likesArray.some((item) => {
       return item._id === this._userId;
@@ -88,8 +78,9 @@ export default class Card {
   }
 
   setLikesNumber (likesArray) {
-    this._likeNumber.textContent = `${likesArray.length}`;
     this._likesArray = likesArray;
+    this._likeNumber.textContent = this._likesArray.length;
+    this._likeIcon.classList.toggle('places__like_active', this.didILikedIt());
   };
 
   _imageError() {

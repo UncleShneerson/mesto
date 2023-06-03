@@ -1,16 +1,3 @@
-// Сергей, как всегда огромное спасибо за все комментарии и дополнительные материалы,
-// внимательно прочел обе статьи и надеюсь на этот раз выполнил все верно )
-
-// Отдельное спасибо за расписанный Promise.all с удовольствием улучшил эту часть
-
-// отловил ошибку (что если ставить лайк и сразу снимать - цифры не менялись без обновления страницы,
-// правда не знаю правильным ли образом поправил)
-
-// в любом случае всегда рад дополнительным замечаниям
-
-// Хорошего дня и еще раз спасибо )
-
-
 //ИМПОРТЫ WEBPACK
 import '../pages/index.css';
 
@@ -102,7 +89,6 @@ function setLike (card) {
   api.addLike (card.getId())
   .then((res) => {
     card.setLikesNumber(res.likes);
-    card.likeIt();
   })
   .catch(err => showErrorApi(err))
 }
@@ -111,7 +97,6 @@ function deleteLike (card) {
   api.deleteLike(card.getId())
   .then((res) => {
     card.setLikesNumber(res.likes);
-    card.likeIt();
   })
   .catch(err => showErrorApi(err))
 }
